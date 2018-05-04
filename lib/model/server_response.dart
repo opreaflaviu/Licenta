@@ -6,7 +6,7 @@ class ServerResponse {
 
   ServerResponse(this._responseType, this._responseMessage);
 
-  ServerResponse.fromJson(Map data){
+  ServerResponse.fromMap(Map data){
     this._responseType =data["response"]["type"];
     this._responseMessage =data["response"]["message"];
   }

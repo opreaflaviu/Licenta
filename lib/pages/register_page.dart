@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../services/student_service.dart';
+import '../repository/student_repository.dart';
 import '../model/student.dart';
 import '../utils/validators.dart';
+import '../utils/shared_preferences_utils.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
   RegisterPageState createState() => new RegisterPageState();
-
 }
 
 class RegisterPageState extends State<RegisterPage> {
@@ -118,10 +118,11 @@ class RegisterPageState extends State<RegisterPage> {
   void _onRegisterClick(){
     if (_password.text == _confirmPassword.text) {
       if (Validators.isValidPassword(_password.text)){
-        var s = new StudentService().postStudent(new Student(_number.text, _name.text, int.parse(_class.text), _password.text));
+        Student student = new Student(_number.text, _name.text, int.parse(_class.text), _password.text);
+        var s = new StudentRepository().postStudent(student);
         s.then((serverResponse) {
           if (serverResponse.responseType == 'notice'){
-            print(serverResponse.toString());
+            _saveInSharedPrefs(student);
             Navigator.of(context).pushNamedAndRemoveUntil('main_page', (Route<dynamic> route) =>false);
           } else {
             print(serverResponse.toString());
@@ -146,6 +147,11 @@ class RegisterPageState extends State<RegisterPage> {
     _scaffoldState.currentState.showSnackBar(new SnackBar(
       content: new Text(_snackBarText)
     ));
+  }
+
+  void _saveInSharedPrefs(Student student) async {
+    SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
+    sharedPreferencesUtils.saveStudent(student);
   }
 
 }

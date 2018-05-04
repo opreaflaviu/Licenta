@@ -1,10 +1,12 @@
+import 'package:licenta/utils/constants.dart';
+
 class Student {
   String _studentNumber;
   String _studentName;
   int _studentClass;
   String _studentPassword;
 
-  Student( this._studentNumber, this._studentName, this._studentClass, this._studentPassword);
+  Student(this._studentNumber, this._studentName, this._studentClass, this._studentPassword);
 
   String get studentNumber => this._studentNumber;
   set studentNumber(String studentNumber) {
@@ -12,7 +14,7 @@ class Student {
   }
 
   String get studentName => this._studentName;
-  set studentName(String studenName) {
+  set studentName(String studentName) {
     this._studentName = studentName;
   }
 
@@ -26,11 +28,20 @@ class Student {
     this._studentPassword = studentPassword;
   }
 
-  Student.fromResponse(Map map){
-    this._studentName = map["name"];
-    this._studentNumber = map["student_number"];
-    this._studentClass = map["class"];
-    this._studentPassword = map["password"];
+  Student.fromMap(Map map){
+    this._studentName = map[Constants.studentName];
+    this._studentNumber = map[Constants.studentNumber];
+    this._studentClass = map[Constants.studentClass];
+    this._studentPassword = map[Constants.studentPassword];
+  }
+
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+    map[Constants.studentName] = this._studentName;
+    map[Constants.studentNumber] = this._studentNumber;
+    map[Constants.studentClass] = this._studentClass;
+    map[Constants.studentPassword] = this._studentPassword;
+    return map;
   }
 
   @override

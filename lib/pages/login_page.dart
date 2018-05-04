@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../services/student_service.dart';
+import '../repository/student_repository.dart';
 import '../model/student.dart';
-import '../utils/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/shared_preferences_utils.dart';
 
 
 
@@ -18,9 +17,7 @@ class LoginPageState extends State<LoginPage> {
   static final TextEditingController _name = new TextEditingController();
   static final TextEditingController _number = new TextEditingController();
   static final TextEditingController _password = new TextEditingController();
-
   final GlobalKey<ScaffoldState> _scaffoldState = new GlobalKey<ScaffoldState>();
-
   String _snackBarText = '';
 
   void _onChange(String snackBarText){
@@ -106,7 +103,7 @@ class LoginPageState extends State<LoginPage> {
   }  
 
   void _onLoginClick(){   
-    var studentResponse = new StudentService().getStudent(_number.text);
+    var studentResponse = new StudentRepository().getStudent(_number.text);
     studentResponse.then((student) {
       _studentIsValid(student) ? _validStudent(student) : _invalidStudent();
       });
@@ -134,16 +131,8 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _saveInSharedPrefs(Student student) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(Constants.studentName, student.studentName);
-    prefs.setString(Constants.studentNumber, student.studentNumber);
-    prefs.setInt(Constants.studentClass, student.studentClass);
-    prefs.commit();
-    print(prefs.getString(Constants.studentName) +" "+ 
-      prefs.getString(Constants.studentNumber) +" "+
-      prefs.getInt(Constants.studentClass).toString()
-      );
-
+    SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
+    sharedPreferencesUtils.saveStudent(student);
   }
 
 }

@@ -2,6 +2,7 @@ name: licenta
 description: A new Flutter project.
 
 dependencies:
+  flutter_search_bar: any
   flutter:
     sdk: flutter
 
@@ -12,7 +13,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  shared_preferences: "^0.2.4+1"
+  shared_preferences: '^0.2.4+1'
+
+  sqflite: '>=0.8.5'
+  path_provider: '^0.4.0'
+
+  connectivity: "^0.3.0"
+
 
 
 # For information on the generic Dart part of this file, see the

@@ -8,7 +8,7 @@ import '../utils/constants.dart';
 
 
 
-class StudentService {
+class StudentRepository {
   Future<Student> getStudent(String studentName) async {
     var response = await http.get(
         Uri.encodeFull(
@@ -20,6 +20,7 @@ class StudentService {
       Map map = data.elementAt(0);
       String studentNumberResponse = map[Constants.studentNumber];
       String studentNameResponse = map[Constants.studentName];
+      print(map.toString());
       int studentClassResponse = int.parse(map[Constants.studentClass]);
       String studentPasswordResponse = map[Constants.studentPassword];
       return new Student(studentNumberResponse, studentNameResponse, studentClassResponse, studentPasswordResponse);
@@ -46,6 +47,6 @@ class StudentService {
           Constants.studentPassword : "$studentPassword"
         });
     Map data = JSON.decode(response.body); 
-    return new ServerResponse.fromJson(data);
+    return new ServerResponse.fromMap(data);
   }
 }
