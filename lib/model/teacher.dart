@@ -6,10 +6,13 @@ class Teacher {
   final String _email;
   final String _web;
   final String _address;
+  final String _photoURL;
+  final String _department;
 
-  const Teacher(this._teacherID, this._name, this._email, this._web, this._address);
+  const Teacher(this._teacherID, this._name, this._email, this._web, this._address, this._photoURL, this._department);
 
-  int get courseID => _teacherID;
+
+  int get teacherID => _teacherID;
 
   String get address => _address;
 
@@ -19,6 +22,10 @@ class Teacher {
 
   String get name => _name;
 
+  String get photoURL => _photoURL;
+
+  String get department => _department;
+
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map[Constants.teacherID] = this._teacherID;
@@ -26,6 +33,8 @@ class Teacher {
     map[Constants.teacherEmail] = this._email;
     map[Constants.teacherWeb] = this._web;
     map[Constants.teacherAddress] = this._address;
+    map[Constants.teacherPhotoURL] = this._photoURL;
+    map[Constants.teacherDepartment] = this._department;
     return map;
   }
 
@@ -34,11 +43,13 @@ class Teacher {
     this._name = map[Constants.teacherName],
     this._email = map[Constants.teacherEmail],
     this._web = map[Constants.teacherWeb],
-    this._address = map[Constants.teacherAddress];
+    this._address = map[Constants.teacherAddress],
+    this._photoURL= map[Constants.teacherPhotoURL],
+    this._department = map[Constants.teacherDepartment];
 
   @override
   String toString() {
-    return 'Teacher{_teacherID: $_teacherID, _name: $_name, _email: $_email, _web: $_web, _address: $_address}';
+    return 'Teacher{_teacherID: $_teacherID, _name: $_name, _email: $_email, _web: $_web, _address: $_address, _photoURL: $_photoURL, _department: $_department}';
   }
 
 

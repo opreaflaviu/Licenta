@@ -2,7 +2,7 @@ name: licenta
 description: A new Flutter project.
 
 dependencies:
-  flutter_search_bar: any
+  material_search: "^0.2.4"
   flutter:
     sdk: flutter
 

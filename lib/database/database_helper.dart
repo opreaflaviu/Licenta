@@ -1,3 +1,4 @@
+import 'package:licenta/model/teacher.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
@@ -32,6 +33,7 @@ class DatabaseHelper {
   void _onCreate(Database database, int version) async {
     await database.execute(Constants.createCoursesTableQuery);
     await database.execute(Constants.createMyCoursesTableQuery);
+    await database.execute(Constants.createTeachersTableQuery);
     print('Table was created');
   }
 
@@ -96,12 +98,50 @@ class DatabaseHelper {
 
     List<Map> maps = await db.query(Constants.myCoursesTableName,
         columns: ['courseId', 'courseDay', 'courseHour', 'courseFrequency', 'courseRoom', 'courseType', 'courseName', 'courseTeacher']);
+
     if (maps.length > 0){
       maps.forEach((map) {
         myCoursesList.add(new Course.fromMap(map));
       });
     }
     return myCoursesList;
+  }
+
+
+  //Teachers
+  Future<int> _insertTeacher(Teacher teacher) async {
+    var db = await database;
+    return await db.insert(Constants.teachersTableName, teacher.toMap());
+  }
+
+  Future<int> insertTeachers(List<Teacher> teachersList) async {
+    int res;
+    teachersList.forEach((teacher) async {
+      res = await _insertTeacher(teacher);
+    });
+
+    return res;
+  }
+
+  Future<List<Teacher>> getTeachers() async {
+    var db = await database;
+    var teachersList = new List<Teacher>();
+
+    List<Map> maps = await db.query(Constants.teachersTableName,
+      columns: ['teacherID', 'teacherName', 'teacherEmail', 'teacherWeb', 'teacherAddress', 'teacherPhotoURL']);
+
+    if (maps.length > 0) {
+      maps.forEach((map) {
+        teachersList.add(new Teacher.fromMap(map));
+      });
+    }
+
+    return teachersList;
+  }
+
+  Future<int> deleteAllTeachers() async {
+    var db = await database;
+    return await db.execute(Constants.deleteAllTeachersQuery);
   }
 
 

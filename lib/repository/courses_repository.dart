@@ -1,19 +1,21 @@
 import 'dart:async';
+import 'package:licenta/repository/repository_interface.dart';
+
 import '../model/course.dart';
 import 'package:licenta/database/database_helper.dart';
 import 'package:licenta/utils/network_connection_utils.dart';
 
 
 
-class CoursesRepository {
+class CoursesRepository implements RepositoryInterface{
   static List<Course> _courseList = new List();
   static DatabaseHelper _databaseHelper = new DatabaseHelper();
 
-  Future<List<Course>> getAllCoursesFromDB() async {
+  Future<List<Course>> _getAllCoursesFromDB() async {
     return await _databaseHelper.getCourses();
   }
 
-  Future<List<Course>> getAllCoursesFromServer() async {
+  Future<List<Course>> _getAllCoursesFromServer() async {
     Course c1 = new Course(1, 'Monday', '16:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
     Course c10 = new Course(10, 'Monday', '10:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
     Course c11 = new Course(11, 'Monday', '08:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
@@ -34,22 +36,27 @@ class CoursesRepository {
 
 
   Future<List<Course>> getCoursesByDay(String day) async {
-    List<Course> _courseListByDay = new List<Course>();
+    var courseListByDay = new List<Course>();
     if (_courseList.isEmpty) {
       if ((await new NetworkConnectionUtils().isConnection())) {
-        _courseList = await getAllCoursesFromServer();
+        _courseList = await _getAllCoursesFromServer();
         _courseList.sort((Course a, Course b) => a.courseHour.compareTo(b.courseHour));
         await _databaseHelper.deleteAllCourses().then((onValue) {_databaseHelper.insertCourses(_courseList);});
       } else {
-        _courseList = await _databaseHelper.getCourses();
+        _courseList = await _getAllCoursesFromDB();
       }
     }
 
     _courseList.forEach((Course course) {
       if (course.courseDay.startsWith(day))
-        _courseListByDay.add(course);
+        courseListByDay.add(course);
     });
 
-    return _courseListByDay;
+    return courseListByDay;
+  }
+
+  @override
+  void search(String text) {
+    // TODO: implement search
   }
 }

@@ -97,13 +97,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_search_bar:
-    dependency: "direct main"
-    description:
-      name: flutter_search_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -193,6 +186,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.1+4"
+  material_search:
+    dependency: "direct main"
+    description:
+      name: material_search
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.4"
   meta:
     dependency: transitive
     description:

@@ -30,9 +30,6 @@ class MyCoursesBodyState extends State<MyCoursesBody> implements MyCoursesBodyVi
     _loadMyCourses();
   }
 
-  _loadMyCourses() {
-    _myCoursesPresenter.loadMyCoursesByDay(_day);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +121,10 @@ class MyCoursesBodyState extends State<MyCoursesBody> implements MyCoursesBodyVi
       );
     }
     return widget;
+  }
+
+  _loadMyCourses() {
+    _myCoursesPresenter.loadMyCoursesByDay(_day);
   }
 
   _deleteMyCourse(Course myCourse) {
