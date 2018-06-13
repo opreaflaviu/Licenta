@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:licenta/model/course.dart';
+import 'package:licenta/utils/colors_constant.dart';
 import 'package:licenta/views/courses_body_view.dart';
 import 'package:licenta/presenters/courses_body_presenter.dart';
 
@@ -52,6 +53,8 @@ class CoursesBodyState extends State<CoursesBody> implements CoursesBodyView{
             itemBuilder: (BuildContext context, int index) {
               Course course = _coursesList.elementAt(index);
               return new Card(
+                elevation: 1.0,
+                color: ColorsConstants.backgroundColorBlue,
                 child: new Padding(
                     padding: new EdgeInsets.only(top: 8.0),
                     child: new Column(
@@ -94,7 +97,7 @@ class CoursesBodyState extends State<CoursesBody> implements CoursesBodyView{
                         new Padding(padding: new EdgeInsets.only(top: 12.0)),
 
                         new Container(
-                          color: Colors.amber,
+                          color: ColorsConstants.primaryColor,
                           child: new Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -176,4 +179,6 @@ class CoursesBodyState extends State<CoursesBody> implements CoursesBodyView{
   void onLoadCoursesError() {
     // TODO: implement onLoadCoursesError
   }
+
+
 }

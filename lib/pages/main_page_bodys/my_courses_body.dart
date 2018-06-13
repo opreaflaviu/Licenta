@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:licenta/model/course.dart';
+import 'package:licenta/utils/colors_constant.dart';
 import 'package:licenta/views/my_courses_body_view.dart';
 import 'package:licenta/presenters/my_course_body_presenter.dart';
 
@@ -51,6 +52,8 @@ class MyCoursesBodyState extends State<MyCoursesBody> implements MyCoursesBodyVi
             itemBuilder: (BuildContext context, int index) {
               Course course = _coursesList.elementAt(index);
               return new Card(
+                color: ColorsConstants.backgroundColorBlue,
+                elevation: 1.0,
                 child: new Padding(
                     padding: new EdgeInsets.only(top: 8.0),
                     child: new Column(
@@ -93,7 +96,7 @@ class MyCoursesBodyState extends State<MyCoursesBody> implements MyCoursesBodyVi
                         new Padding(padding: new EdgeInsets.only(top: 12.0)),
 
                         new Container(
-                          color: Colors.amber,
+                          color: ColorsConstants.primaryColor,
                           child: new Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -129,12 +132,12 @@ class MyCoursesBodyState extends State<MyCoursesBody> implements MyCoursesBodyVi
 
   _deleteMyCourse(Course myCourse) {
     _myCoursesPresenter.deleteFromMyCourses(myCourse);
-    _loadMyCourses();
+
   }
 
   @override
   void onDeleteFromMyCoursesComplete() {
-    // TODO: implement onDeleteFromMyCoursesComplete
+    _loadMyCourses();
   }
 
   @override

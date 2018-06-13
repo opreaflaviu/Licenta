@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:licenta/utils/colors_constant.dart';
 import '../pages/main_page.dart';
 import '../model/student.dart';
 import '../utils/constants.dart';
@@ -29,15 +30,15 @@ class LandingPageState extends State<LandingPage> {
 
   Widget _displayContent(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: ColorsConstants.primaryColor,
       key: _scaffoldState,
-      appBar: new AppBar(
+      /*appBar: new AppBar(
         title: new Text("Title",
             textAlign: TextAlign.center, style: new TextStyle(fontSize: 40.0)),
         centerTitle: true,
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: ColorsConstants.primaryColor,
         elevation: 0.0,
-      ),
+      ),*/
       body: new Container(
           padding: new EdgeInsets.symmetric(),
           child: new Center(
@@ -46,7 +47,7 @@ class LandingPageState extends State<LandingPage> {
               children: <Widget>[
                 new RaisedButton(
                   padding: new EdgeInsets.fromLTRB(142.0, 16.0, 142.0, 16.0),
-                  color: Colors.lightBlueAccent,
+                  color: ColorsConstants.backgroundColor,
                   elevation: 0.0,
                   child: new Text("Login", textScaleFactor: 1.2),
                   onPressed: (() =>
@@ -55,7 +56,7 @@ class LandingPageState extends State<LandingPage> {
                 new Container(padding: new EdgeInsets.only(top: 16.0)),
                 new RaisedButton(
                   padding: new EdgeInsets.fromLTRB(132.0, 16.0, 132.0, 16.0),
-                  color: Colors.lightBlueAccent,
+                  color: ColorsConstants.backgroundColor,
                   elevation: 0.0,
                   child: new Text("Register", textScaleFactor: 1.2),
                   onPressed: (() =>

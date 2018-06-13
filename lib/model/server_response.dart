@@ -1,25 +1,22 @@
 import 'dart:core';
 
+import 'package:licenta/utils/constants.dart';
+
 class ServerResponse {
-  String _responseType;
-  String _responseMessage;
+  final String _responseType;
+  final String _responseMessage;
 
-  ServerResponse(this._responseType, this._responseMessage);
+  const ServerResponse(this._responseType, this._responseMessage);
 
-  ServerResponse.fromMap(Map data){
-    this._responseType =data["response"]["type"];
-    this._responseMessage =data["response"]["message"];
-  }
+  ServerResponse.fromMap(Map data):
+    this._responseType = data[Constants.serverResponse][Constants.serverType],
+    this._responseMessage = data[Constants.serverResponse][Constants.serverMessage];
+
+
 
   String get responseType => this._responseType;
-  set responseType(String responseType) {
-    this._responseType = responseType;
-  } 
 
   String get responseMessage => this._responseMessage;
-  set responseMessage(String responeMessage) {
-    this._responseMessage =responeMessage;
-  }
 
   @override
   String toString() => _responseType + ": " + _responseMessage;

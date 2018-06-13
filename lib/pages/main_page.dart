@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:licenta/pages/main_page_bodys/news_body.dart';
+import 'package:licenta/pages/main_page_bodys/saved_news_body.dart';
 import 'package:licenta/pages/main_page_bodys/teachers_body.dart';
+import 'package:licenta/utils/colors_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/constants.dart';
 import './main_page_bodys/courses_body.dart';
 import './main_page_bodys/my_courses_body.dart';
 import './main_page_bodys/classroom_body.dart';
-import 'package:material_search/material_search.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -22,7 +24,8 @@ class MainPageState extends State<MainPage>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(length: 5, vsync: this);
+    _tabController = new TabController(initialIndex: 0, length: 5, vsync: this);
+    setNewsBody();
   }
 
   @override
@@ -32,31 +35,15 @@ class MainPageState extends State<MainPage>
 
   Widget displayContent(BuildContext context) {
     return new Scaffold(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: ColorsConstants.backgroundColor,
         appBar: new AppBar(
-          /*title: new Text("MainPage",
-            textAlign: TextAlign.center, style: new TextStyle(fontSize: 40.0)),*/
+          title: new Text("MainPage",
+            textAlign: TextAlign.center, style: new TextStyle(fontSize: 40.0, color: Colors.lightBlue)),
           centerTitle: true,
-          backgroundColor: Colors.teal[600],
+          backgroundColor: ColorsConstants.primaryColor,
           elevation: 0.0,
-          actions: <Widget>[
-            new Padding(
-                padding: new EdgeInsets.only( right: 80.0),
-                child: new Row(
-                  children: <Widget>[
-                    new Container(
-                      alignment: Alignment.center,
-                      width: 200.0,
-                      height: 90.0,
-                      child: new TextField(
-                        decoration: new InputDecoration(
-                            suffixIcon: new Icon(Icons.search), labelText: "Search..."),
-                      ),
-                    ),
-                  ],
-                )),
-          ],
         ),
+
         drawer: new Drawer(
           child: new ListView(
             children: <Widget>[
@@ -72,7 +59,7 @@ class MainPageState extends State<MainPage>
                     new UserDetails(),
                     new Padding(padding: new EdgeInsets.only(top: 30.0)),
                     new IconButton(Icons.event_note, 'News', () {
-                      _changeTo(new ClassroomBody());
+                      _changeToNews();
                     }, Colors.black54, Colors.black54),
                     new IconButton(Icons.schedule, 'Courses', () {
                       _changeToCourses();
@@ -100,7 +87,20 @@ class MainPageState extends State<MainPage>
           ),
         ),
         bottomNavigationBar: _bottomBarNavigation,
-        body: _body);
+        body: _body,);
+  }
+
+
+
+  void setNewsBody() {
+    _body = _getTabViewNews();
+    _bottomBarNavigation = new NavigationBarNews(_tabController);
+  }
+
+  void _onChangeToNews() {
+    setState((){
+      setNewsBody();
+    });
   }
 
   void _onChangeToCourses() {
@@ -124,6 +124,12 @@ class MainPageState extends State<MainPage>
     });
   }
 
+
+  _changeToNews(){
+    Navigator.of(context).pop();
+    _onChangeToNews();
+  }
+
   _changeToCourses() {
     Navigator.of(context).pop();
     _onChangeToCourses();
@@ -137,6 +143,14 @@ class MainPageState extends State<MainPage>
   _changeToTeachers() {
     Navigator.of(context).pop();
     _onChangeToTeachers();
+  }
+
+
+  _getTabViewNews() {
+    return new TabBarView(controller: _tabController, children: <Widget>[
+      new NewsBody(),
+      new SavedNewsBody(),
+    ]);
   }
 
   _getTabViewCourses() {
@@ -176,6 +190,29 @@ class MainPageState extends State<MainPage>
   }
 }
 
+
+class NavigationBarNews extends StatelessWidget {
+  TabController _controller;
+
+  NavigationBarNews(this._controller);
+
+  @override
+  Widget build(BuildContext context) {
+    return new TabBar(
+      controller: _controller,
+      isScrollable: false,
+      labelColor: Colors.black54,
+      indicatorColor: Colors.black54,
+      indicatorSize: TabBarIndicatorSize.tab,
+      indicatorWeight: 4.0,
+      tabs: <Tab>[
+        new Tab(text: "News"),
+        new Tab(text: "Saved News"),
+      ],
+    );
+  }
+}
+
 class NavigationBarCourses extends StatelessWidget {
   TabController _controller;
 
@@ -197,7 +234,6 @@ class NavigationBarCourses extends StatelessWidget {
         new Tab(text: Constants.thursday),
         new Tab(text: Constants.friday),
       ],
-      unselectedLabelColor: Colors.teal[600],
     );
   }
 }
@@ -221,7 +257,6 @@ class NavigationBarTeachers extends StatelessWidget {
         new Tab(text: Constants.Math),
         new Tab(text: Constants.CSH),
       ],
-      unselectedLabelColor: Colors.teal[600],
     );
   }
 }

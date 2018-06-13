@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:licenta/utils/colors_constant.dart';
 import '../repository/student_repository.dart';
 import '../model/student.dart';
 import '../utils/shared_preferences_utils.dart';
@@ -29,12 +30,12 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: ColorsConstants.backgroundColor,
       key: _scaffoldState,
       appBar: new AppBar(
         title: new Text("Login", textAlign: TextAlign.center, style: new TextStyle(fontSize: 40.0)),
         centerTitle: true,
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: ColorsConstants.primaryColor,
         elevation: 0.0,
         automaticallyImplyLeading: false
       ),
@@ -53,7 +54,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
 
                 new TextField(
-                  decoration: new InputDecoration(labelText: 'Number', contentPadding: new EdgeInsets.only(top: 16.0), labelStyle: new TextStyle(fontSize: 16.0)), 
+                  decoration: new InputDecoration(labelText: 'Number', contentPadding: new EdgeInsets.only(top: 16.0), labelStyle: new TextStyle(fontSize: 16.0)),
                   style: new TextStyle(fontSize: 20.0, color: Colors.black),
                   controller: _number
                 ),

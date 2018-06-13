@@ -1,7 +1,7 @@
 abstract class Constants {
   
-  //static const String apiRoot = "http://192.168.100.11/ServerLicenta2/public/api/students";
-  static const String apiRoot = "http://172.30.116.22/ServerLicenta2/public/api/students";
+  static const String apiRoot = "http://192.168.1.105/ServerLicenta2/public/api/students";
+  //static const String apiRoot = "http://172.30.119.231/ServerLicenta2/public/api/students";
   static const String studentNumber = "student_number";
   static const String studentName = "name";
   static const String studentClass = "class";
@@ -13,23 +13,6 @@ abstract class Constants {
   static const String thursday = "Thu";
   static const String friday = "Fri";
 
-
-  static const String createCoursesTableQuery = "CREATE TABLE Courses(courseID INTEGER PRIMARY KEY AUTOINCREMENT, courseDay TEXT, courseHour TEXT, courseFrequency TEXT, courseRoom TEXT, courseType TEXT, courseName TEXT, courseTeacher TEXT)";
-  static const String deleteAllCoursesQuery = "DELETE FROM Courses";
-
-  static const String createMyCoursesTableQuery = "CREATE TABLE MyCourses(courseID INTEGER PRIMARY KEY AUTOINCREMENT, courseDay TEXT, courseHour TEXT, courseFrequency TEXT, courseRoom TEXT, courseType TEXT, courseName TEXT, courseTeacher TEXT)";
-
-  static const String createUserTableQuery = "CREATE TABLE User(studentNumber TEXT, studentName TEXT, studentClass INTEGER)";
-
-  static const String createTeachersTableQuery = "CREATE TABLE Teachers(teacherID INTEGER PRIMARY KEY AUTOINCREMENT, teacherName TEXT, teacherEmail TEXT, teacherWeb TEXT, teacherAddress TEXT, teacherPhotoURL TEXT, teacherDepartment)";
-  static const String deleteAllTeachersQuery = "DELETE FROM Teachers";
-
-
-  static const String databaseName = "maindatabase.db";
-  static const String coursesTableName = "Courses";
-  static const String myCoursesTableName = "MyCourses";
-  static const String teachersTableName = "Teachers";
-  static const String userTableName = "User";
 
   static const String courseID = "courseID";
   static const String courseDay = "courseDay";
@@ -51,6 +34,16 @@ abstract class Constants {
   static const String CS = "cs";
   static const String CSH = "csh";
   static const String Math = "math";
+
+  static const String newsTitle = "title";
+  static const String newsLink = "link";
+  static const String newsURL= "http://www.cs.ubbcluj.ro/feed/";
+
+  static const String serverResponse = "response";
+  static const String serverType = "type";
+  static const String serverMessage = "message";
+
+
 
 
 

@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:licenta/database/database_helper.dart';
 import 'package:licenta/model/course.dart';
 import 'package:licenta/exception/my_exception.dart';
-import 'package:licenta/repository/repository_interface.dart';
 
-
-class MyCoursesRepository implements RepositoryInterface {
+class MyCoursesRepository {
 
   static List<Course> _courseList = new List();
   static DatabaseHelper _databaseHelper = new DatabaseHelper();
@@ -52,11 +50,6 @@ class MyCoursesRepository implements RepositoryInterface {
 
 
     return _courseListByDay;
-  }
-
-  @override
-  void search(String text) {
-    // TODO: implement search
   }
 
 

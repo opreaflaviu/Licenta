@@ -9,6 +9,7 @@ import '../utils/constants.dart';
 
 
 class StudentRepository {
+
   Future<Student> getStudent(String studentName) async {
     var response = await http.get(
         Uri.encodeFull(

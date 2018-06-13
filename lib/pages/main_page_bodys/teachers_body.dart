@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:licenta/model/teacher.dart';
 import 'package:licenta/presenters/teachers_body_presenter.dart';
+import 'package:licenta/utils/colors_constant.dart';
 import 'package:licenta/views/teachers_body_view.dart';
 
 
 class TeachersBody extends StatefulWidget {
-  String _department;
+  final String _department;
 
   TeachersBody(this._department);
 
   @override
-  TeachersBodyState createState() => new TeachersBodyState(_department);
+  _TeachersBodyState createState() => new _TeachersBodyState(_department);
 
 }
 
-class TeachersBodyState extends State<TeachersBody> implements TeachersBodyView {
+class _TeachersBodyState extends State<TeachersBody> implements TeachersBodyView {
   String _department;
   TeachersBodyPresenter _teachersBodyPresenter;
   List<Teacher> _teachersList;
   bool _isFetching;
 
 
-  TeachersBodyState(this._department){
+  _TeachersBodyState(this._department){
     _teachersBodyPresenter = new TeachersBodyPresenter(this);
     _loadTeachers();
   }
+
 
   @override
   void initState() {
@@ -79,7 +81,6 @@ class TeachersBodyState extends State<TeachersBody> implements TeachersBodyView 
   void onLoadTeachersError() {
     // TODO: implement onLoadTeachersError
   }
-
 }
 
 
@@ -91,13 +92,15 @@ class TeacherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Card(
+      color: ColorsConstants.backgroundColorBlue,
+      elevation: 1.0,
       child: new Padding(
         padding: new EdgeInsets.all(8.0),
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             new Image.network(teacher.photoURL, width: 100.0, height: 120.0, fit: BoxFit.fill,),
-            
+
             new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget> [

@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'package:licenta/repository/repository_interface.dart';
-
 import '../model/course.dart';
 import 'package:licenta/database/database_helper.dart';
 import 'package:licenta/utils/network_connection_utils.dart';
 
 
 
-class CoursesRepository implements RepositoryInterface{
+class CoursesRepository {
   static List<Course> _courseList = new List();
   static DatabaseHelper _databaseHelper = new DatabaseHelper();
 
@@ -55,8 +53,4 @@ class CoursesRepository implements RepositoryInterface{
     return courseListByDay;
   }
 
-  @override
-  void search(String text) {
-    // TODO: implement search
-  }
 }
