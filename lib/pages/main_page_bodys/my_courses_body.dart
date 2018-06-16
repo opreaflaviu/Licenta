@@ -24,11 +24,12 @@ class MyCoursesBodyState extends State<MyCoursesBody> implements MyCoursesBodyVi
   MyCoursesBodyState(this._day){
     _myCoursesPresenter = new MyCoursesBodyPresenter(this);
   }
+
   @override
   void initState() {
-    super.initState();
     _isFetching = true;
     _loadMyCourses();
+    super.initState();
   }
 
 

@@ -13,7 +13,7 @@ class StudentRepository {
   Future<Student> getStudent(String studentName) async {
     var response = await http.get(
         Uri.encodeFull(
-          Constants.apiRoot + "/'$studentName'"),
+          Constants.apiRoot + "/students/'$studentName'"),
           headers: {"Accept": "appication/json"});
 
     List data = JSON.decode(response.body);
@@ -37,7 +37,7 @@ class StudentRepository {
 
     var response = await http.post(
         Uri.encodeFull(
-            Constants.apiRoot + "/add"),
+            Constants.apiRoot + "/students/add"),
         headers: {
           "Accept": "appication/json"
         },

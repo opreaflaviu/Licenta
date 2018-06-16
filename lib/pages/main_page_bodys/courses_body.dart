@@ -27,9 +27,9 @@ class CoursesBodyState extends State<CoursesBody> implements CoursesBodyView{
 
   @override
   void initState() {
-    super.initState();
     _isFetching = true;
     _coursesPresenter.loadCoursesByDay(_day);
+    super.initState();
   }
 
   @override

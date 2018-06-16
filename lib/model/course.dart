@@ -45,7 +45,7 @@ class Course {
   }
 
   Course.fromMap(Map map):
-    this._courseID = map[Constants.courseID],
+    this._courseID = int.parse(map[Constants.courseID]),
     this._courseDay =  map[Constants.courseDay],
     this._courseHour = map[Constants.courseHour],
     this._courseFrequency = map[Constants.courseFrequency],

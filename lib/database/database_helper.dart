@@ -1,4 +1,5 @@
 import 'package:licenta/database/database_contract.dart';
+import 'package:licenta/model/classroom.dart';
 import 'package:licenta/model/news.dart';
 import 'package:licenta/model/teacher.dart';
 import 'package:licenta/utils/constants.dart';
@@ -33,6 +34,7 @@ class DatabaseHelper {
   }
 
   void _onCreate(Database database, int version) async {
+    await database.execute(DatabaseContract.createClassroomTableQuery);
     await database.execute(DatabaseContract.createSavedNewsTableQuery);
     await database.execute(DatabaseContract.createCoursesTableQuery);
     await database.execute(DatabaseContract.createMyCoursesTableQuery);
@@ -147,7 +149,7 @@ class DatabaseHelper {
 
   Future<int> deleteAllTeachers() async {
     var db = await database;
-    return await db.execute(DatabaseContract.deleteAllTeachersQuery);
+    return await db.execute(DatabaseContract.deleteAllClassroomsQuery);
   }
 
   //News
@@ -178,5 +180,42 @@ class DatabaseHelper {
     return await db.delete(DatabaseContract.savedNewsTableName,
         where: Constants.newsTitle + " = ? AND " + Constants.newsLink + " = ?",
         whereArgs: [news.title, news.link]);
+  }
+
+
+  //Classroom
+  Future<int> _insertClassroom(Classroom classroom) async {
+    var db = await database;
+    return await db.insert(DatabaseContract.classroomTableName, classroom.toMap());
+  }
+
+  Future<int> insertClassrooms(List<Classroom> classroomsList) async {
+    int res;
+    classroomsList.forEach((classroom) async {
+      res = await _insertClassroom(classroom);
+    });
+
+    return res;
+  }
+
+  Future<List<Classroom>> getClassrooms() async {
+    var db = await database;
+    var classroomList = new List<Classroom>();
+
+    List<Map> maps = await db.query(DatabaseContract.classroomTableName,
+        columns: [Constants.classroomID, Constants.classroomName, Constants.classroomBuilding, Constants.classroomAddress]);
+
+    if (maps.length > 0) {
+      maps.forEach((map) {
+        classroomList.add(new Classroom.fromMap(map));
+      });
+    }
+
+    return classroomList;
+  }
+
+  Future<int> deleteAllClassrooms() async {
+    var db = await database;
+    return await db.execute(DatabaseContract.deleteAllClassroomsQuery);
   }
 }

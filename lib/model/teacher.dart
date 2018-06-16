@@ -39,7 +39,7 @@ class Teacher {
   }
 
   Teacher.fromMap(Map map):
-    this._teacherID = map[Constants.teacherID],
+    this._teacherID = int.parse(map[Constants.teacherID]),
     this._name = map[Constants.teacherName],
     this._email = map[Constants.teacherEmail],
     this._web = map[Constants.teacherWeb],

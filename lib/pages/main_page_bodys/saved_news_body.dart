@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:licenta/model/news.dart';
 import 'package:licenta/presenters/saved_news_presenter.dart';
 import 'package:licenta/utils/colors_constant.dart';
+import 'package:licenta/utils/native_components.dart';
 import 'package:licenta/views/saved_news_body_view.dart';
 
 class SavedNewsBody extends StatefulWidget {
@@ -21,9 +23,9 @@ class _SavedNewsBodyState extends State<SavedNewsBody> implements SavedNewsBodyV
 
   @override
   void initState() {
-    super.initState();
     _isFetching = true;
     _loadSavedNews();
+    super.initState();
   }
 
   @override
@@ -61,7 +63,7 @@ class _SavedNewsBodyState extends State<SavedNewsBody> implements SavedNewsBodyV
                       new FlatButton(
                           textColor: Colors.black87,
                           splashColor: Colors.white,
-                          onPressed: (){print(news.title + " " + news.link);},
+                          onPressed: (){_openBrowserApp(news.link);},
                           child: new Text(
                               news.title.length < 35
                                   ? news.title
@@ -83,7 +85,6 @@ class _SavedNewsBodyState extends State<SavedNewsBody> implements SavedNewsBodyV
   }
 
   void _deleteSavedNews(News news){
-    print("dasdsadasdsa ${news.link}    ${news.title}");
     _savedNewsPresenter.deleteSavedNews(news);
   }
 
@@ -109,6 +110,20 @@ class _SavedNewsBodyState extends State<SavedNewsBody> implements SavedNewsBodyV
   @override
   void onDeletedSavedNewsError() {
     // TODO: implement onDeletedSavedNewsError
+  }
+
+  void _openBrowserApp(String web){
+    if (_checkPlatform()) {
+      try {
+        NativeComponents.openBrowserApp(web);
+      } catch (e){
+        print("Open browser $e");
+      }
+    }
+  }
+
+  bool _checkPlatform() {
+    return Platform.isAndroid == true;
   }
 
 }

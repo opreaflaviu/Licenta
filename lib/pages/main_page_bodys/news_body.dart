@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:licenta/model/news.dart';
 import 'package:licenta/presenters/news_presenter.dart';
 import 'package:licenta/utils/colors_constant.dart';
+import 'package:licenta/utils/native_components.dart';
 import 'package:licenta/views/news_body_view.dart';
 
 class NewsBody extends StatefulWidget {
@@ -20,9 +22,9 @@ class _NewsBodyState extends State<NewsBody> implements NewsBodyView {
 
   @override
   void initState() {
-    super.initState();
     _isFetching = true;
     _newsPresenter.getNews();
+    super.initState();
   }
 
   @override
@@ -60,7 +62,7 @@ class _NewsBodyState extends State<NewsBody> implements NewsBodyView {
                       new FlatButton(
                           textColor: Colors.black87,
                           splashColor: Colors.white,
-                          onPressed: (){print(news.link);},
+                          onPressed: (){_openBrowserApp(news.link);},
                           child: new Text(
                               news.title.length < 30
                                   ? news.title
@@ -103,4 +105,19 @@ class _NewsBodyState extends State<NewsBody> implements NewsBodyView {
   void onAddedSavedNewsError() {
     // TODO: implement onAddedSavedNewsError
   }
+
+  void _openBrowserApp(String web){
+    if (_checkPlatform()) {
+      try {
+        NativeComponents.openBrowserApp(web);
+      } catch (e){
+        print("Open browser $e");
+      }
+    }
+  }
+
+  bool _checkPlatform() {
+    return Platform.isAndroid == true;
+  }
+
 }

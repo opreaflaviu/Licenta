@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:licenta/model/teacher.dart';
 import 'package:licenta/presenters/teachers_body_presenter.dart';
 import 'package:licenta/utils/colors_constant.dart';
+import 'package:licenta/utils/native_components.dart';
 import 'package:licenta/views/teachers_body_view.dart';
 
 
@@ -24,16 +27,15 @@ class _TeachersBodyState extends State<TeachersBody> implements TeachersBodyView
 
   _TeachersBodyState(this._department){
     _teachersBodyPresenter = new TeachersBodyPresenter(this);
-    _loadTeachers();
+    //_loadTeachers();
   }
 
 
   @override
   void initState() {
-    super.initState();
     _isFetching = true;
     _loadTeachers();
-
+    super.initState();
   }
 
   @override
@@ -85,9 +87,9 @@ class _TeachersBodyState extends State<TeachersBody> implements TeachersBodyView
 
 
 class TeacherCard extends StatelessWidget {
-  Teacher teacher;
+  final Teacher _teacher;
 
-  TeacherCard(this.teacher);
+  const TeacherCard(this._teacher);
 
   @override
   Widget build(BuildContext context) {
@@ -99,14 +101,14 @@ class TeacherCard extends StatelessWidget {
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new Image.network(teacher.photoURL, width: 100.0, height: 120.0, fit: BoxFit.fill,),
+            new Image.network(_teacher.photoURL, width: 100.0, height: 120.0, fit: BoxFit.fill,),
 
             new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget> [
                 new Padding(
                   padding: new EdgeInsets.only(left: 16.0, bottom: 8.0),
-                  child: new Text(teacher.name,
+                  child: new Text(_teacher.name,
                     textAlign: TextAlign.center,
                     style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   )),
@@ -116,36 +118,77 @@ class TeacherCard extends StatelessWidget {
                     children: <Widget>[
                       new Icon(Icons.email),
                       new Padding(padding: new EdgeInsets.only(left: 16.0)),
-                      new Text(teacher.email)
+                      new Text(_teacher.email)
                     ],
                   ),
-                  onPressed: (){print(teacher.email);}),
+                  onPressed: (){
+                    _openMailApp(_teacher.email);
+                  }),
 
                 new FlatButton(
                     child: new Row(
                       children: <Widget>[
                         new Icon(Icons.computer),
                         new Padding(padding: new EdgeInsets.only(left: 16.0)),
-                        new Text(teacher.web)
+                        new Text(_teacher.web)
                       ],
                     ),
-                    onPressed: (){print(teacher.web);}),
+                    onPressed: (){
+                      _openBrowserApp(_teacher.web);
+                    }),
 
                 new FlatButton(
                     child: new Row(
                       children: <Widget>[
                         new Icon(Icons.location_on),
                         new Padding(padding: new EdgeInsets.only(left: 16.0)),
-                        new Text(teacher.address)
+                        new Text(_teacher.address)
                       ],
                     ),
-                    onPressed: (){print(teacher.address);}),
+                    onPressed: () {
+                      _openMapsApp(_teacher.address);
+                    }),
               ]
             )
           ],
         ),
       ),
     );
+  }
+
+
+  void _openMapsApp(String address){
+    if (_checkPlatform()) {
+      try {
+        NativeComponents.openMapsApp(address);
+      } catch(e) {
+        print("Open maps $e");
+      }
+    }
+  }
+
+  void _openBrowserApp(String web){
+    if (_checkPlatform()) {
+      try {
+        NativeComponents.openBrowserApp(web);
+      } catch (e){
+        print("Open browser $e");
+      }
+    }
+  }
+
+  void _openMailApp(String email){
+    if (_checkPlatform()) {
+      try {
+        NativeComponents.openMailApp(email);
+      } catch (e){
+        print("Open email $e");
+      }
+    }
+  }
+
+  bool _checkPlatform() {
+    return Platform.isAndroid == true;
   }
 
 

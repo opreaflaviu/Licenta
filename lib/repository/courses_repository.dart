@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:licenta/utils/constants.dart';
+import 'package:http/http.dart' as http;
 import '../model/course.dart';
 import 'package:licenta/database/database_helper.dart';
 import 'package:licenta/utils/network_connection_utils.dart';
@@ -14,7 +17,23 @@ class CoursesRepository {
   }
 
   Future<List<Course>> _getAllCoursesFromServer() async {
-    Course c1 = new Course(1, 'Monday', '16:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
+    var response = await http.get(
+        Uri.encodeFull(
+            Constants.apiRoot + "/courses"),
+        headers: {"Accept": "appication/json"});
+
+    List data = JSON.decode(response.body);
+
+    var coursesList = new List<Course>();
+    if (data.length != 0) {
+      data.forEach((d) {
+        Course course = new Course.fromMap(d);
+        coursesList.add(course);
+      });
+    }
+    return coursesList;
+
+    /*Course c1 = new Course(1, 'Monday', '16:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
     Course c10 = new Course(10, 'Monday', '10:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
     Course c11 = new Course(11, 'Monday', '08:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
     Course c12 = new Course(12, 'Monday', '18:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
@@ -28,7 +47,7 @@ class CoursesRepository {
     Course c7 = new Course(7, 'Monday', '10:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
     Course c8 = new Course(8, 'Friday', '08:00', 'Weekly', '6/II', 'Course', 'OOP', 'Andrei Andrei');
     Course c9 = new Course(9, 'Thursday', '12:00', 'Even', 'L001', 'Laboratory', 'MAP', 'Ana Ana');
-    return [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14];
+    return [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14];*/
 }
 
 

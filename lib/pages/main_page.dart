@@ -68,7 +68,7 @@ class MainPageState extends State<MainPage>
                       _changeToMyCourses();
                     }, Colors.black54, Colors.black54),
                     new IconButton(Icons.business, 'Classrooms', () {
-                      _changeTo(new ClassroomBody());
+                      _changeToClassroom();
                     }, Colors.black54, Colors.black54),
                     new IconButton(Icons.group, 'Teachers', () {
                       _changeToTeachers();
@@ -143,6 +143,15 @@ class MainPageState extends State<MainPage>
   _changeToTeachers() {
     Navigator.of(context).pop();
     _onChangeToTeachers();
+  }
+
+  _changeToClassroom() {
+    Navigator.of(context).pop();
+    setState((){
+      _body = new ClassroomBody();
+      _bottomBarNavigation = null;
+    });
+
   }
 
 
