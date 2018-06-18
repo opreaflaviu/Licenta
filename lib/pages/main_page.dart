@@ -15,8 +15,7 @@ class MainPage extends StatefulWidget {
   MainPageState createState() => new MainPageState();
 }
 
-class MainPageState extends State<MainPage>
-    with SingleTickerProviderStateMixin {
+class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
   static Widget _body;
   static TabController _tabController;
   static Widget _bottomBarNavigation;

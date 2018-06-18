@@ -8,12 +8,12 @@ abstract class DatabaseContract {
 
   static const String createUserTableQuery = "CREATE TABLE $userTableName(studentNumber TEXT, studentName TEXT, studentClass INTEGER)";
 
-  static const String createTeachersTableQuery = "CREATE TABLE $teachersTableName(teacherID INTEGER PRIMARY KEY AUTOINCREMENT, teacherName TEXT, teacherEmail TEXT, teacherWeb TEXT, teacherAddress TEXT, teacherPhotoURL TEXT, teacherDepartment)";
+  static const String createTeachersTableQuery = "CREATE TABLE $teachersTableName(teacherID INTEGER PRIMARY KEY, teacherName TEXT, teacherEmail TEXT, teacherWeb TEXT, teacherAddress TEXT, teacherPhotoURL TEXT, teacherDepartment)";
   static const String deleteAllTeachersQuery = "DELETE FROM $teachersTableName";
 
   static const String createSavedNewsTableQuery = "CREATE TABLE $savedNewsTableName(${Constants.newsTitle} TEXT PRIMARY KEY, ${Constants.newsLink} TEXT)";
 
-  static const String createClassroomTableQuery = "CREATE TABLE $classroomTableName(${Constants.classroomID} INTEGER PRIMARY KEY, ${Constants.classroomName} TEXT, ${Constants.classroomBuilding} TEXT, ${Constants.classroomAddress} TEXT)";
+  static const String createClassroomTableQuery = "CREATE TABLE $classroomTableName(${Constants.classroomName} TEXT PRIMARY KEY, ${Constants.classroomBuilding} TEXT, ${Constants.classroomAddress} TEXT)";
   static const String deleteAllClassroomsQuery = "DELETE FROM $classroomTableName";
 
   static const String databaseName = "maindatabase.db";

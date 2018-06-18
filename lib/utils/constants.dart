@@ -1,7 +1,7 @@
 abstract class Constants {
   
-  static const String apiRoot = "http://192.168.1.105/ServerLicenta2/public/api";
-  //static const String apiRoot = "http://172.30.119.231/ServerLicenta2/public/api/students";
+  //static const String apiRoot = "http://192.168.100.10/ServerLicenta2/public/api";
+  static const String apiRoot = "http://172.25.12.49/ServerLicenta2/public/api";
   static const String studentNumber = "student_number";
   static const String studentName = "name";
   static const String studentClass = "class";
@@ -43,7 +43,6 @@ abstract class Constants {
   static const String serverType = "type";
   static const String serverMessage = "message";
 
-  static const String classroomID = "classroomID";
   static const String classroomName = "classroomName";
   static const String classroomBuilding = "classroomBuilding";
   static const String classroomAddress = "classroomAddress";

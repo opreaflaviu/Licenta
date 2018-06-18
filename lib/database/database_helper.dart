@@ -203,7 +203,7 @@ class DatabaseHelper {
     var classroomList = new List<Classroom>();
 
     List<Map> maps = await db.query(DatabaseContract.classroomTableName,
-        columns: [Constants.classroomID, Constants.classroomName, Constants.classroomBuilding, Constants.classroomAddress]);
+        columns: [Constants.classroomName, Constants.classroomBuilding, Constants.classroomAddress]);
 
     if (maps.length > 0) {
       maps.forEach((map) {
