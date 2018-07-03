@@ -10,6 +10,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
   webfeed: "^0.2.1"
+  simple_permissions: '^0.1.2'
+  barcode_scan: '^0.0.4'
+  quiver: '>=0.28.0 <0.29.0'
+
 
 dev_dependencies:
   flutter_test:
@@ -19,7 +23,9 @@ dev_dependencies:
   sqflite: '>=0.8.5'
   path_provider: '^0.4.0'
 
-  connectivity: "^0.3.0"
+  connectivity: '^0.3.0'
+
+
 
 
 

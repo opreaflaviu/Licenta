@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:licenta/pages/main_page_bodys/attendance_body.dart';
 import 'package:licenta/pages/main_page_bodys/news_body.dart';
 import 'package:licenta/pages/main_page_bodys/saved_news_body.dart';
 import 'package:licenta/pages/main_page_bodys/teachers_body.dart';
 import 'package:licenta/utils/colors_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_permissions/simple_permissions.dart';
+import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter/services.dart';
 import '../utils/constants.dart';
 import './main_page_bodys/courses_body.dart';
 import './main_page_bodys/my_courses_body.dart';
@@ -19,6 +23,7 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
   static Widget _body;
   static TabController _tabController;
   static Widget _bottomBarNavigation;
+  static Widget _scanFAB;
 
   @override
   void initState() {
@@ -72,6 +77,9 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
                     new IconButton(Icons.group, 'Teachers', () {
                       _changeToTeachers();
                     }, Colors.black54, Colors.black54),
+                    new IconButton(Icons.add, 'Attendance', () {
+                      _changeToAttendance();
+                    }, Colors.black54, Colors.black54),
                     new Padding(padding: new EdgeInsets.only(top: 24.0)),
                     new IconButton(Icons.account_box, 'Acount', () {
                       print("Acount");
@@ -86,7 +94,8 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
           ),
         ),
         bottomNavigationBar: _bottomBarNavigation,
-        body: _body,);
+        body: _body,
+        floatingActionButton: _scanFAB,);
   }
 
 
@@ -98,12 +107,14 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
 
   void _onChangeToNews() {
     setState((){
+      _scanFAB = null;
       setNewsBody();
     });
   }
 
   void _onChangeToCourses() {
     setState(() {
+      _scanFAB = null;
       _body = _getTabViewCourses();
       _bottomBarNavigation = new NavigationBarCourses(_tabController);
     });
@@ -111,6 +122,7 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
 
   void _onChangeToMyCourses() {
     setState(() {
+      _scanFAB = null;
       _body = _getTabViewMyCourses();
       _bottomBarNavigation = new NavigationBarCourses(_tabController);
     });
@@ -118,8 +130,18 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
 
   void _onChangeToTeachers() {
     setState(() {
+      _scanFAB = null;
       _body = _getTabViewTeachers();
       _bottomBarNavigation = new NavigationBarTeachers(_tabController);
+    });
+  }
+
+  void _changeToAttendance() {
+    Navigator.of(context).pop();
+    setState((){
+      _scanFAB = new _ScanFAB();
+      _body = new AttendanceBody();
+      _bottomBarNavigation = null;
     });
   }
 
@@ -338,4 +360,52 @@ class UserDetailsState extends State<UserDetails> {
           ),
         ]);
   }
+}
+
+
+class _ScanFAB extends StatefulWidget {
+  @override
+  _ScanFABState createState() => new _ScanFABState();
+
+}
+
+class _ScanFABState extends State<_ScanFAB> {
+  String _reader = '';
+  Permission permission = Permission.Camera;
+
+  @override
+  Widget build(BuildContext context) {
+    return new FloatingActionButton(
+      onPressed: _scan,
+      child: new Icon(
+          Icons.add
+      ),
+    );
+  }
+
+
+  _scan() async {
+    try {
+      String reader = await BarcodeScanner.scan();
+
+      if(!mounted){
+        return;
+      }
+
+      print("reader: ============ $reader");
+    } on PlatformException catch(e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        //_requestPermission();
+      } else {
+        print("unknown error PlatformExceprion ========= $e");
+      }
+    } on FormatException {
+      print("user return without scanning");
+    } catch(e) {
+      print("unknown error FormatException ========= $e");
+    }
+
+
+  }
+
 }
