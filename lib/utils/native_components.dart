@@ -30,6 +30,4 @@ class NativeComponents {
       throw new MyException("Message $e");
     }
   }
-
-
 }

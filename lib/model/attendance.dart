@@ -18,7 +18,7 @@ class Attendance {
   Attendance.fromMap(Map map):
     _courseName = map[Constants.courseName],
     _courseType = map[Constants.courseType],
-    _attendanceDates = map["attendanceDate"];
+    _attendanceDates = map[Constants.attendanceDate];
 
   @override
   String toString() {

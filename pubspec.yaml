@@ -2,7 +2,6 @@ name: licenta
 description: A new Flutter project.
 
 dependencies:
-  material_search: "^0.2.4"
   flutter:
     sdk: flutter
 
@@ -11,6 +10,7 @@ dependencies:
   cupertino_icons: ^0.1.0
   webfeed: "^0.2.1"
   simple_permissions: '^0.1.2'
+
   barcode_scan: '^0.0.4'
   quiver: '>=0.28.0 <0.29.0'
 
@@ -20,10 +20,11 @@ dev_dependencies:
     sdk: flutter
   shared_preferences: '^0.2.4+1'
 
-  sqflite: '>=0.8.5'
-  path_provider: '^0.4.0'
+  path_provider: '^0.4.1'
 
   connectivity: '^0.3.0'
+
+  sqflite: "^0.10.0"
 
 
 

@@ -5,7 +5,6 @@ import 'package:licenta/model/course.dart';
 import 'package:licenta/exception/my_exception.dart';
 
 class MyCoursesRepository {
-
   static List<Course> _courseList = new List();
   static DatabaseHelper _databaseHelper = new DatabaseHelper();
 
@@ -38,10 +37,10 @@ class MyCoursesRepository {
     _courseList = await _databaseHelper.getMyCourses();
 
     if(_courseList.isEmpty) {
-      return [];
+      return _courseList;
     }
 
-    _courseList.sort((Course a, Course b) => a.courseHour.compareTo(b.courseHour));
+    //_courseList.sort((Course a, Course b) => a.courseHour.compareTo(b.courseHour));
 
     _courseList.forEach((Course course) {
       if (course.courseDay.startsWith(day))
@@ -51,7 +50,6 @@ class MyCoursesRepository {
 
     return _courseListByDay;
   }
-
 
 
 }

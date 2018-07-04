@@ -193,13 +193,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.1+4"
-  material_search:
-    dependency: "direct main"
-    description:
-      name: material_search
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.7"
   meta:
     dependency: transitive
     description:
@@ -372,7 +365,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.0"
+    version: "0.10.0"
   stack_trace:
     dependency: transitive
     description:

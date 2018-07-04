@@ -31,6 +31,7 @@ class CoursesRepository {
         coursesList.add(course);
       });
     }
+
     return coursesList;
 
     /*Course c1 = new Course(1, 'Monday', '16:00', 'Odd', 'L302', 'Seminar', 'LFTC', 'Ion Ion');
@@ -48,7 +49,7 @@ class CoursesRepository {
     Course c8 = new Course(8, 'Friday', '08:00', 'Weekly', '6/II', 'Course', 'OOP', 'Andrei Andrei');
     Course c9 = new Course(9, 'Thursday', '12:00', 'Even', 'L001', 'Laboratory', 'MAP', 'Ana Ana');
     return [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14];*/
-}
+  }
 
 
 
@@ -60,7 +61,7 @@ class CoursesRepository {
         _courseList.sort((Course a, Course b) => a.courseHour.compareTo(b.courseHour));
         await _databaseHelper.deleteAllCourses().then((onValue) {_databaseHelper.insertCourses(_courseList);});
       } else {
-        _courseList = await _getAllCoursesFromDB();
+          _courseList = await _getAllCoursesFromDB();
       }
     }
 

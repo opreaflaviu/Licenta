@@ -7,9 +7,8 @@ import 'package:licenta/utils/constants.dart';
 import 'package:licenta/utils/network_connection_utils.dart';
 
 class ClassroomRepository {
-
   static var _classroomsList = new List<Classroom>();
-  DatabaseHelper _databaseHelper = new DatabaseHelper();
+  static DatabaseHelper _databaseHelper = new DatabaseHelper();
 
   Future<List<Classroom>> _getClassroomsFromDB() async {
     return await _databaseHelper.getClassrooms();
@@ -42,7 +41,6 @@ class ClassroomRepository {
     Classroom c7 = new Classroom(7, "6/II", "Cladirea Centrala", "Str. Kogalniceanu, Nr1");
     Classroom c8 = new Classroom(8, "6/II", "Cladirea Centrala", "Str. Kogalniceanu, Nr1");
     Classroom c9 = new Classroom(9, "6/II", "Cladirea Centrala", "Str. Kogalniceanu, Nr1");
-
     return [c1, c2, c3, c4, c5, c6, c7, c8, c9];*/
   }
 
@@ -58,5 +56,6 @@ class ClassroomRepository {
 
     return _classroomsList;
   }
+
 
 }

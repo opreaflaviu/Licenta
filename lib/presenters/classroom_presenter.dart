@@ -9,7 +9,7 @@ class ClassroomPresenter {
     _classroomRepository = new ClassroomRepository();
   }
 
-  loadClassroomList() async {
+  void loadClassroomList() async {
     _classroomRepository.loadClassroomList()
         .then((classroomList) => _classroomBodyView.onLoadClassroomComplete(classroomList))
         .catchError(() => _classroomBodyView.onLoadClassroomError());

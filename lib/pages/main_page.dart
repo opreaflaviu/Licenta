@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:licenta/model/server_response.dart';
 import 'package:licenta/pages/main_page_bodys/attendance_body.dart';
 import 'package:licenta/pages/main_page_bodys/news_body.dart';
 import 'package:licenta/pages/main_page_bodys/saved_news_body.dart';
@@ -13,6 +15,7 @@ import '../utils/constants.dart';
 import './main_page_bodys/courses_body.dart';
 import './main_page_bodys/my_courses_body.dart';
 import './main_page_bodys/classroom_body.dart';
+import 'package:http/http.dart' as http;
 
 class MainPage extends StatefulWidget {
   @override
@@ -370,7 +373,6 @@ class _ScanFAB extends StatefulWidget {
 }
 
 class _ScanFABState extends State<_ScanFAB> {
-  String _reader = '';
   Permission permission = Permission.Camera;
 
   @override
@@ -392,10 +394,9 @@ class _ScanFABState extends State<_ScanFAB> {
         return;
       }
 
-      print("reader: ============ $reader");
+      await _sendAttendanceToServer(reader);
     } on PlatformException catch(e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
-        //_requestPermission();
       } else {
         print("unknown error PlatformExceprion ========= $e");
       }
@@ -404,8 +405,32 @@ class _ScanFABState extends State<_ScanFAB> {
     } catch(e) {
       print("unknown error FormatException ========= $e");
     }
+  }
 
+  _sendAttendanceToServer(String reader) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    List<String> readerData = reader.split(" ");
+    String courseName = readerData.elementAt(0);
+    String courseType = readerData.elementAt(1);
+    String attendanceDate = readerData.elementAt(2);
+    String studentNumber = sharedPreferences.getString(Constants.studentNumber);
+    print("$courseName  $courseType  $attendanceDate  $studentNumber");
 
+    var response = await http.post(
+        Uri.encodeFull(
+            Constants.apiRoot + "/attendance/add"),
+        headers: {
+          "Accept": "appication/json"
+        },
+        body: {
+          Constants.courseName : "$courseName",
+          Constants.courseType : "$courseType",
+          Constants.attendanceDate : "$attendanceDate",
+          Constants.studentNumber: "$studentNumber"
+        });
+
+    Map data = JSON.decode(response.body);
+    return new ServerResponse.fromMap(data);
   }
 
 }
