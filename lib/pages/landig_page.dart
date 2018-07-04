@@ -17,6 +17,9 @@ class LandingPageState extends State<LandingPage> {
   Connectivity _connectivity = new Connectivity();
   StreamSubscription<ConnectivityResult> _connSub;
   static Widget _content;
+  var studentName;
+  var studentClass;
+  var studentNumber;
 
   LandingPageState(){
     getFromSharedPreferences();
@@ -32,13 +35,7 @@ class LandingPageState extends State<LandingPage> {
     return new Scaffold(
       backgroundColor: ColorsConstants.primaryColor,
       key: _scaffoldState,
-      /*appBar: new AppBar(
-        title: new Text("Title",
-            textAlign: TextAlign.center, style: new TextStyle(fontSize: 40.0)),
-        centerTitle: true,
-        backgroundColor: ColorsConstants.primaryColor,
-        elevation: 0.0,
-      ),*/
+
       body: new Container(
           padding: new EdgeInsets.symmetric(),
           child: new Center(
@@ -50,10 +47,11 @@ class LandingPageState extends State<LandingPage> {
                   color: ColorsConstants.backgroundColor,
                   elevation: 0.0,
                   child: new Text("Login", textScaleFactor: 1.2),
-                  onPressed: (() =>
-                      Navigator.of(context).pushNamed('login_page')),
+                  onPressed: loginWithSharedPrefs
                 ),
+
                 new Container(padding: new EdgeInsets.only(top: 16.0)),
+
                 new RaisedButton(
                   padding: new EdgeInsets.fromLTRB(132.0, 16.0, 132.0, 16.0),
                   color: ColorsConstants.backgroundColor,
@@ -62,6 +60,7 @@ class LandingPageState extends State<LandingPage> {
                   onPressed: (() =>
                       Navigator.of(context).pushNamed('register_page')),
                 ),
+
                 new Container(padding: new EdgeInsets.only(top: 32.0)),
               ],
             ),
@@ -78,6 +77,14 @@ class LandingPageState extends State<LandingPage> {
         style: new TextStyle(fontSize: 16.0),
       ),
     )));
+  }
+
+  void loginWithSharedPrefs(){
+    if (studentName != null && studentClass != null && studentNumber != null) {
+      Navigator.of(context).pushNamedAndRemoveUntil('main_page', (Route<dynamic> route) =>false);
+    } else {
+      Navigator.of(context).pushNamed('login_page');
+    }
   }
 
   void initState() {
@@ -108,13 +115,9 @@ class LandingPageState extends State<LandingPage> {
   getFromSharedPreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState((){
-      var studentName = sharedPreferences.getString(Constants.studentName);
-      var studentClass = sharedPreferences.getInt(Constants.studentClass);
-      var studentNumber = sharedPreferences.getString(Constants.studentNumber);
-      print("Student:    $studentName, $studentNumber, $studentClass");
-      if (studentName != null && studentClass != null && studentNumber != null) {
-        _content = new MainPage();
-      }
+      studentName = sharedPreferences.getString(Constants.studentName);
+      studentClass = sharedPreferences.getInt(Constants.studentClass);
+      studentNumber = sharedPreferences.getString(Constants.studentNumber);
     });
 
   }

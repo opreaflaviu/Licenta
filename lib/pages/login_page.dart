@@ -117,7 +117,6 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _validStudent(Student student){
-    print('login done');
     _saveInSharedPrefs(student);
     Navigator.of(context).pushNamedAndRemoveUntil('main_page', (Route<dynamic> route) =>false);
   }
