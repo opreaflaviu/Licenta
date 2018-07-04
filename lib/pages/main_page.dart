@@ -27,6 +27,7 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
   static TabController _tabController;
   static Widget _bottomBarNavigation;
   static Widget _scanFAB;
+  static String _title;
 
   @override
   void initState() {
@@ -44,8 +45,8 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
     return new Scaffold(
         backgroundColor: ColorsConstants.backgroundColor,
         appBar: new AppBar(
-          title: new Text("MainPage",
-            textAlign: TextAlign.center, style: new TextStyle(fontSize: 40.0, color: Colors.lightBlue)),
+          title: new Text(_title,
+            textAlign: TextAlign.center, style: new TextStyle(fontSize: 32.0, color: Colors.black54)),
           centerTitle: true,
           backgroundColor: ColorsConstants.primaryColor,
           elevation: 0.0,
@@ -63,31 +64,31 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    new UserDetails(),
+                    new _UserDetails(),
                     new Padding(padding: new EdgeInsets.only(top: 30.0)),
-                    new IconButton(Icons.event_note, 'News', () {
+                    new _IconButton(Icons.event_note, 'News', () {
                       _changeToNews();
                     }, Colors.black54, Colors.black54),
-                    new IconButton(Icons.schedule, 'Courses', () {
+                    new _IconButton(Icons.schedule, 'Courses', () {
                       _changeToCourses();
                     }, Colors.black54, Colors.black54),
-                    new IconButton(Icons.assignment, 'My Courses', () {
+                    new _IconButton(Icons.assignment, 'My Courses', () {
                       _changeToMyCourses();
                     }, Colors.black54, Colors.black54),
-                    new IconButton(Icons.business, 'Classrooms', () {
+                    new _IconButton(Icons.business, 'Classrooms', () {
                       _changeToClassroom();
                     }, Colors.black54, Colors.black54),
-                    new IconButton(Icons.group, 'Teachers', () {
+                    new _IconButton(Icons.group, 'Teachers', () {
                       _changeToTeachers();
                     }, Colors.black54, Colors.black54),
-                    new IconButton(Icons.add, 'Attendance', () {
+                    new _IconButton(Icons.add, 'Attendance', () {
                       _changeToAttendance();
                     }, Colors.black54, Colors.black54),
                     new Padding(padding: new EdgeInsets.only(top: 24.0)),
-                    new IconButton(Icons.account_box, 'Acount', () {
+                    new _IconButton(Icons.account_box, 'Acount', () {
                       print("Acount");
                     }, Colors.black54, Colors.black54),
-                    new IconButton(Icons.block, 'Logout', () {
+                    new _IconButton(Icons.block, 'Logout', () {
                       print('Logout');
                     }, Colors.black54, Colors.black54)
                   ],
@@ -104,19 +105,21 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
 
 
   void setNewsBody() {
+    _scanFAB = null;
+    _title = "News";
     _body = _getTabViewNews();
-    _bottomBarNavigation = new NavigationBarNews(_tabController);
+    _bottomBarNavigation = new _NavigationBarNews(_tabController);
   }
 
   void _onChangeToNews() {
     setState((){
-      _scanFAB = null;
       setNewsBody();
     });
   }
 
   void _onChangeToCourses() {
     setState(() {
+      _title = "Courses";
       _scanFAB = null;
       _body = _getTabViewCourses();
       _bottomBarNavigation = new NavigationBarCourses(_tabController);
@@ -125,6 +128,7 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
 
   void _onChangeToMyCourses() {
     setState(() {
+      _title = "My Courses";
       _scanFAB = null;
       _body = _getTabViewMyCourses();
       _bottomBarNavigation = new NavigationBarCourses(_tabController);
@@ -133,15 +137,17 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
 
   void _onChangeToTeachers() {
     setState(() {
+      _title = "Teachers";
       _scanFAB = null;
       _body = _getTabViewTeachers();
-      _bottomBarNavigation = new NavigationBarTeachers(_tabController);
+      _bottomBarNavigation = new _NavigationBarTeachers(_tabController);
     });
   }
 
   void _changeToAttendance() {
     Navigator.of(context).pop();
     setState((){
+      _title = "Attendance";
       _scanFAB = new _ScanFAB();
       _body = new AttendanceBody();
       _bottomBarNavigation = null;
@@ -172,6 +178,8 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
   _changeToClassroom() {
     Navigator.of(context).pop();
     setState((){
+      _title = "Classrooms";
+      _scanFAB = null;
       _body = new ClassroomBody();
       _bottomBarNavigation = null;
     });
@@ -210,7 +218,6 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
     return new TabBarView(controller: _tabController, children: <Widget>[
       new TeachersBody(Constants.CS),
       new TeachersBody(Constants.Math),
-      new TeachersBody(Constants.CSH),
     ]);
   }
 
@@ -224,10 +231,10 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
 }
 
 
-class NavigationBarNews extends StatelessWidget {
+class _NavigationBarNews extends StatelessWidget {
   TabController _controller;
 
-  NavigationBarNews(this._controller);
+  _NavigationBarNews(this._controller);
 
   @override
   Widget build(BuildContext context) {
@@ -271,10 +278,10 @@ class NavigationBarCourses extends StatelessWidget {
   }
 }
 
-class NavigationBarTeachers extends StatelessWidget {
+class _NavigationBarTeachers extends StatelessWidget {
   TabController _controller;
 
-  NavigationBarTeachers(this._controller);
+  _NavigationBarTeachers(this._controller);
 
   @override
   Widget build(BuildContext context) {
@@ -288,20 +295,19 @@ class NavigationBarTeachers extends StatelessWidget {
       tabs: <Tab>[
         new Tab(text: Constants.CS),
         new Tab(text: Constants.Math),
-        new Tab(text: Constants.CSH),
       ],
     );
   }
 }
 
-class IconButton extends StatelessWidget {
+class _IconButton extends StatelessWidget {
   IconData _icon;
   String _text;
   VoidCallback _method;
   Color _textColor;
   Color _iconColor;
 
-  IconButton(
+  _IconButton(
       this._icon, this._text, this._method, this._textColor, this._iconColor);
 
   @override
@@ -317,15 +323,15 @@ class IconButton extends StatelessWidget {
   }
 }
 
-class UserDetails extends StatefulWidget {
+class _UserDetails extends StatefulWidget {
   var _studentName = '';
   var _studentClass = '';
 
   @override
-  UserDetailsState createState() => new UserDetailsState();
+  _UserDetailsState createState() => new _UserDetailsState();
 }
 
-class UserDetailsState extends State<UserDetails> {
+class _UserDetailsState extends State<_UserDetails> {
   var _studentName = '';
   var _studentClass = '';
   Future<SharedPreferences> _sharedPrefs = SharedPreferences.getInstance();
@@ -339,7 +345,7 @@ class UserDetailsState extends State<UserDetails> {
     });
   }
 
-  UserDetailsState() {
+  _UserDetailsState() {
     getFromSharedPrefs();
   }
 
@@ -409,7 +415,7 @@ class _ScanFABState extends State<_ScanFAB> {
 
   _sendAttendanceToServer(String reader) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    List<String> readerData = reader.split(" ");
+    List<String> readerData = reader.split("  ");
     String courseName = readerData.elementAt(0);
     String courseType = readerData.elementAt(1);
     String attendanceDate = readerData.elementAt(2);

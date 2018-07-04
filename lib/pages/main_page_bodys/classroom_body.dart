@@ -55,11 +55,6 @@ class _ClassroomBodyState extends State<ClassroomBody>
 
   @override
   void onLoadClassroomComplete(List<Classroom> classroomList) {
-    print("Load complete");
-    classroomList.forEach((c) {
-      print("dasdasdas    ${c.toString()}");
-    });
-
     setState(() {
       _classroomList = classroomList;
       _isFetching = false;

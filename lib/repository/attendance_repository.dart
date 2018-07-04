@@ -29,9 +29,7 @@ class AttendanceRepository {
     var attendanceList = new List<Attendance>();
     if (data.length != 0) {
       data.forEach((d) {
-        print("Aaaaa" + new Attendance.fromMap(d).toString());
-        Attendance attendance = new Attendance.fromMap(d);
-        attendanceList.add(attendance);
+        attendanceList.add(new Attendance.fromMap(d));
       });
     }
 
@@ -53,18 +51,11 @@ class AttendanceRepository {
     List<Attendance> attendanceListFromServer = await _getAttendanceFromServer();
 
     for(var a in attendanceListFromServer) {
-      print("dddddddddddddddd" + a.toString());
       String courseName = a.courseName;
       if (!_attendanceList.containsKey(courseName)) {
         _attendanceList.addValues(courseName, Iterable.castFrom(_getDatesByCourseName(courseName, attendanceListFromServer)));
       }
     }
-
-    attendanceListFromServer.forEach((a){
-      _attendanceList[a.courseName].toList().forEach((f){
-        print("repo " + f);
-      });
-    });
 
     return _attendanceList;
   }

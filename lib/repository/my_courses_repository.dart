@@ -40,7 +40,7 @@ class MyCoursesRepository {
       return _courseList;
     }
 
-    //_courseList.sort((Course a, Course b) => a.courseHour.compareTo(b.courseHour));
+    _courseList.sort((Course a, Course b) => a.courseHour.compareTo(b.courseHour));
 
     _courseList.forEach((Course course) {
       if (course.courseDay.startsWith(day))

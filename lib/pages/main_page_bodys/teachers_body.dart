@@ -27,7 +27,6 @@ class _TeachersBodyState extends State<TeachersBody> implements TeachersBodyView
 
   _TeachersBodyState(this._department){
     _teachersBodyPresenter = new TeachersBodyPresenter(this);
-    //_loadTeachers();
   }
 
 

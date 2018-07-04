@@ -41,7 +41,6 @@ class DatabaseHelper {
     await db.execute(DatabaseContract.createCoursesTableQuery);
     await db.execute(DatabaseContract.createMyCoursesTableQuery);
     await db.execute(DatabaseContract.createTeachersTableQuery);
-    print('Table was created');
   }
 
   //Course
@@ -50,7 +49,6 @@ class DatabaseHelper {
     return await database.rawInsert(
         "INSERT INTO ${DatabaseContract.coursesTableName}(${Constants.courseID}, ${Constants.courseDay}, ${Constants.courseHour}, ${Constants.courseFrequency},${Constants.courseRoom}, ${Constants.courseType}, ${Constants.courseName}, ${Constants.courseTeacher}) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     [course.courseID, course.courseDay, course.courseHour, course.courseFrequency, course.courseRoom, course.courseType, course.courseName, course.courseTeacher]);
-    //return await database.insert(DatabaseContract.coursesTableName, course.toMap());
   }
 
   Future<int> insertCourses(List<Course> courses) async {
@@ -71,7 +69,6 @@ class DatabaseHelper {
   Future<int> deleteAllCourses() async {
     var database = await db;
     int res = await database.delete(DatabaseContract.coursesTableName);
-    //int res = await database.execute(DatabaseContract.deleteAllCoursesQuery);
     return res;
   }
 
@@ -95,12 +92,9 @@ class DatabaseHelper {
   //MyCourse
   Future<int> insertMyCourse(Course course) async {
     var database = await db;
-    print('MyCourse Inser   ${course.courseName}');
     return await database.rawInsert(
         "INSERT INTO ${DatabaseContract.myCoursesTableName}(${Constants.courseID}, ${Constants.courseDay}, ${Constants.courseHour}, ${Constants.courseFrequency},${Constants.courseRoom}, ${Constants.courseType}, ${Constants.courseName}, ${Constants.courseTeacher}) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [course.courseID, course.courseDay, course.courseHour, course.courseFrequency, course.courseRoom, course.courseType, course.courseName, course.courseTeacher]);
-
-    //return await database.insert(DatabaseContract.myCoursesTableName, course.toMap());
   }
 
   Future<int> deleteMyCourse(Course course) async {
@@ -132,14 +126,12 @@ class DatabaseHelper {
     return await database.rawInsert(
         "INSERT INTO ${DatabaseContract.teachersTableName}(${Constants.teacherID}, ${Constants.teacherName}, ${Constants.teacherEmail}, ${Constants.teacherWeb},${Constants.teacherAddress}, ${Constants.teacherPhotoURL}, ${Constants.teacherDepartment}) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [teacher.teacherID, teacher.name, teacher.email, teacher.web, teacher.address, teacher.photoURL, teacher.department]);
-    //return await database.insert(DatabaseContract.teachersTableName, teacher.toMap());
   }
 
   Future<int> insertTeachers(List<Teacher> teachersList) async {
     int res;
     teachersList.forEach((teacher) async {
       res = await _insertTeacher(teacher);
-      print("REssssss  $res");
     });
 
     return res;
@@ -163,7 +155,6 @@ class DatabaseHelper {
   Future<int> deleteAllTeachers() async {
     var database = await db;
     int res = await database.delete(DatabaseContract.teachersTableName);
-    //int res = await database.execute(DatabaseContract.deleteAllTeachersQuery);
     return res;
   }
 

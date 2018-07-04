@@ -33,7 +33,7 @@ class LoginPageState extends State<LoginPage> {
       backgroundColor: ColorsConstants.backgroundColor,
       key: _scaffoldState,
       appBar: new AppBar(
-        title: new Text("Login", textAlign: TextAlign.center, style: new TextStyle(fontSize: 40.0)),
+        title: new Text("Login", textAlign: TextAlign.center, style: new TextStyle(fontSize: 32.0, color: Colors.black54)),
         centerTitle: true,
         backgroundColor: ColorsConstants.primaryColor,
         elevation: 0.0,

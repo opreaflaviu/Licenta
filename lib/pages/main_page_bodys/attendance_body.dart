@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:licenta/presenters/attendance_presenter.dart';
 import 'package:licenta/utils/colors_constant.dart';
@@ -28,6 +30,12 @@ class AttendanceBodyState extends State<AttendanceBody>
     super.initState();
   }
 
+  _getAttendanceList() async {
+    await new Future.delayed(new Duration(seconds: 1));
+    _presenter.getAttendanceList();
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget widget;
@@ -37,43 +45,46 @@ class AttendanceBodyState extends State<AttendanceBody>
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: new CircularProgressIndicator()));
     } else {
-      widget = new ListView.builder(
-          itemCount: _attendanceList == null ? 0 : _attendanceList.length,
-          itemBuilder: (context, index) {
-            String name = _attendanceList.keys.elementAt(index);
-            return new ExpansionTile(
-                backgroundColor: ColorsConstants.backgroundColorBlue,
-                title: new Padding(
-                  padding: new EdgeInsets.only(left: 20.0),
-                  child:
-                  new Container(
-                    alignment: Alignment.center,
-                    child: new Text(
-                        name,
-                        style: new TextStyle(
-                          fontSize: 20.0,
-                        )),
-                  )
-
-                ),
-
-                children: _attendanceList[name].toList().map((val) => new ListTile(
+      widget = new RefreshIndicator(
+          child: new ListView.builder(
+              itemCount: _attendanceList == null ? 0 : _attendanceList.length,
+              itemBuilder: (context, index) {
+                String name = _attendanceList.keys.elementAt(index);
+                return new ExpansionTile(
+                    backgroundColor: ColorsConstants.backgroundColorBlue,
                     title: new Padding(
-                        padding: new EdgeInsets.only(left: 0.0),
-                        child: new Container(
-                          alignment: Alignment.centerLeft,
-                          child: new Text(val,
-                            style: new TextStyle(
-                              color: Colors.black87,
-                              fontSize: 16.0,
-                            ),
-                          ),
+                        padding: new EdgeInsets.only(left: 20.0),
+                        child:
+                        new Container(
+                          alignment: Alignment.center,
+                          child: new Text(
+                              name,
+                              style: new TextStyle(
+                                fontSize: 20.0,
+                              )),
                         )
 
-                    )
-                )).toList()
-            );
-          }
+                    ),
+
+                    children: _attendanceList[name].toList().map((val) => new ListTile(
+                        title: new Padding(
+                            padding: new EdgeInsets.only(left: 0.0),
+                            child: new Container(
+                              alignment: Alignment.centerLeft,
+                              child: new Text(val,
+                                style: new TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            )
+
+                        )
+                    )).toList()
+                );
+              }
+          ),
+          onRefresh: _getAttendanceList
       );
     }
     return widget;

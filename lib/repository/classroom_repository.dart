@@ -31,17 +31,6 @@ class ClassroomRepository {
       });
     }
     return teachersList;
-
-    /*Classroom c1 = new Classroom(1, "6/II", "Cladirea Centrala", "Str. Kogalniceanu, Nr. 1");
-    Classroom c2 = new Classroom(2, "L302", "Campus", "Str. Theodor Mihali, Nr. 67");
-    Classroom c3 = new Classroom(3, "e", "Cladirea Mathematica", "Str. Ploiesti, Nr1");
-    Classroom c4 = new Classroom(4, "9/I", "Cladirea Centrala", "Str. Kogalniceanu, Nr1");
-    Classroom c5 = new Classroom(5, "A312", "Cladirea Av. Iancu", "Str. A. Iancu, Nr1");
-    Classroom c6 = new Classroom(6, "6/II", "Cladirea Centrala", "Str. Kogalniceanu, Nr1");
-    Classroom c7 = new Classroom(7, "6/II", "Cladirea Centrala", "Str. Kogalniceanu, Nr1");
-    Classroom c8 = new Classroom(8, "6/II", "Cladirea Centrala", "Str. Kogalniceanu, Nr1");
-    Classroom c9 = new Classroom(9, "6/II", "Cladirea Centrala", "Str. Kogalniceanu, Nr1");
-    return [c1, c2, c3, c4, c5, c6, c7, c8, c9];*/
   }
 
   Future<List<Classroom>> loadClassroomList() async {
