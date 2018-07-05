@@ -74,12 +74,14 @@ class LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     new FlatButton(
+                      highlightColor: ColorsConstants.backgroundColor,
                       padding: new EdgeInsets.only(left: 32.0, right: 32.0),
                       child: new Text("Back", textScaleFactor: 1.2),
                       onPressed: (() =>_onBackClick(context)),
                     ),
 
                     new FlatButton(
+                      highlightColor: ColorsConstants.backgroundColor,
                       padding: new EdgeInsets.only(left: 32.0, right: 32.0),
                       child: new Text("Login", textScaleFactor: 1.2),
                       onPressed: _onLoginClick,

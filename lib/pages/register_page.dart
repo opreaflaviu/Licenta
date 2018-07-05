@@ -85,12 +85,14 @@ class RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     new FlatButton(
+                      highlightColor: ColorsConstants.backgroundColor,
                       padding: new EdgeInsets.only(left: 32.0, right: 32.0),
                       child: new Text("Back", textScaleFactor: 1.2),
                       onPressed: (() => _onBackClick(context)),
                     ),
 
                     new FlatButton(
+                      highlightColor: ColorsConstants.backgroundColor,
                       padding: new EdgeInsets.only(left: 32.0, right: 32.0),
                       child: new Text("Register", textScaleFactor: 1.2),
                       onPressed: _onRegisterClick,

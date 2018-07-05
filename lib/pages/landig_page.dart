@@ -42,20 +42,20 @@ class LandingPageState extends State<LandingPage> {
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                new RaisedButton(
+                new FlatButton(
+                  highlightColor: ColorsConstants.backgroundColor,
                   padding: new EdgeInsets.fromLTRB(142.0, 16.0, 142.0, 16.0),
                   color: ColorsConstants.backgroundColor,
-                  elevation: 0.0,
                   child: new Text("Login", textScaleFactor: 1.2),
                   onPressed: loginWithSharedPrefs
                 ),
 
                 new Container(padding: new EdgeInsets.only(top: 16.0)),
 
-                new RaisedButton(
+                new FlatButton(
+                  highlightColor: ColorsConstants.backgroundColor,
                   padding: new EdgeInsets.fromLTRB(132.0, 16.0, 132.0, 16.0),
                   color: ColorsConstants.backgroundColor,
-                  elevation: 0.0,
                   child: new Text("Register", textScaleFactor: 1.2),
                   onPressed: (() =>
                       Navigator.of(context).pushNamed('register_page')),

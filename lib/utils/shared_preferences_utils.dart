@@ -14,6 +14,12 @@ class SharedPreferencesUtils {
     _sharedPreferences = SharedPreferences.getInstance();
   }
 
+  logoutStudent(){
+    _sharedPreferences.then((sharedPrefs) {
+      sharedPrefs.clear();
+    });
+  }
+
   saveStudent(Student student){
     _sharedPreferences.then((sharedPrefs) {
       sharedPrefs.setString(Constants.studentName, student.studentName);

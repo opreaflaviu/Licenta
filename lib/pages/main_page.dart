@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:licenta/model/server_response.dart';
+import 'package:licenta/model/student.dart';
 import 'package:licenta/pages/main_page_bodys/attendance_body.dart';
 import 'package:licenta/pages/main_page_bodys/news_body.dart';
 import 'package:licenta/pages/main_page_bodys/saved_news_body.dart';
 import 'package:licenta/pages/main_page_bodys/teachers_body.dart';
 import 'package:licenta/utils/colors_constant.dart';
+import 'package:licenta/utils/shared_preferences_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_permissions/simple_permissions.dart';
 import 'package:barcode_scan/barcode_scan.dart';
@@ -85,11 +87,11 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
                       _changeToAttendance();
                     }, Colors.black54, Colors.black54),
                     new Padding(padding: new EdgeInsets.only(top: 24.0)),
-                    new _IconButton(Icons.account_box, 'Acount', () {
+                    /*new _IconButton(Icons.account_box, 'Acount', () {
                       print("Acount");
-                    }, Colors.black54, Colors.black54),
-                    new _IconButton(Icons.block, 'Logout', () {
-                      print('Logout');
+                    }, Colors.black54, Colors.black54),*/
+                    new _IconButton(Icons.block, 'Logout', (){
+                      logout();
                     }, Colors.black54, Colors.black54)
                   ],
                 ),
@@ -103,6 +105,10 @@ class MainPageState extends State<MainPage> with SingleTickerProviderStateMixin 
   }
 
 
+  void logout(){
+    new SharedPreferencesUtils().logoutStudent();
+    Navigator.of(context).pushNamedAndRemoveUntil('landing_page', (Route<dynamic> route) =>false);
+  }
 
   void setNewsBody() {
     _scanFAB = null;
@@ -415,12 +421,11 @@ class _ScanFABState extends State<_ScanFAB> {
 
   _sendAttendanceToServer(String reader) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    List<String> readerData = reader.split("  ");
+    List<String> readerData = reader.split('-');
     String courseName = readerData.elementAt(0);
     String courseType = readerData.elementAt(1);
     String attendanceDate = readerData.elementAt(2);
     String studentNumber = sharedPreferences.getString(Constants.studentNumber);
-    print("$courseName  $courseType  $attendanceDate  $studentNumber");
 
     var response = await http.post(
         Uri.encodeFull(
